@@ -16,31 +16,31 @@ export class Table extends Component {
     getHeaders(header){
         let empty = header.empty;
         if(empty){
-            return <th></th>;
+            return <th className={header.className}></th>;
         } 
-        if(header.render){
-            return <th>{header.render(header.renderData)}</th>;
+        if(header.renderCellHeader){
+            if(header.renderData){
+                return <th className={header.className}>{header.renderCellHeader(header.renderData)}</th>;
+            }else{
+                return <th className={header.className}>{header.renderCellHeader(header.data)}</th>;
+            }  
         }
 
         return (
-            <th>{header.data}</th>
+            <th className={header.className}>{header.data}</th>
         )
     }
 
-    getRowBody(row, headerRow, cellProperties){
+    getRowBody(row, headerRow, cellProperties, headersColumns, length){
         let object = row;
-        let keys = Object.keys(object);
-        let length = keys.length;
-        let headersColumns = 
+        console.log(object);
         return (
             <tr>
                 {
-                    keys.map( (key) =>{
-                        
-                        return this.getCellRow(object,key,length,headerRow, cellProperties)
+                    headersColumns.map( (obj) =>{
+                            return this.getCellRow(object,obj,length,headerRow, cellProperties)
                         }
-                        
-                       
+                
                     )
                 }
                 
@@ -48,13 +48,13 @@ export class Table extends Component {
         )
     }
 
-    getCellRow(row,key,length,headerRow, cellProperties){
+    getCellRow(row,obj,length,headerRow, cellProperties){
         let cells= [];
         let numRows;
 
         if(!headerRow) headerRow = {};
         if(!headerRow.column) headerRow.column ="";
-        if(key===headerRow.column){
+        if(obj.keyColumn===headerRow.column){
              numRows = length;
         }
 
@@ -69,19 +69,20 @@ export class Table extends Component {
         }
         
         cellProperties.numCellByProperties.map( (object) =>{
-            if(key === object.key){
+            if(obj.keyColumn === object.key){
                 let numloops = object.numCell;
                 while(numloops>0){
-                    cells.push(<td></td>);
+                    cells.push(<td className={object.className}></td>);
                     numloops--;   
                 }
             }
         })
 
-       
-        cells.push(<td rowSpan={numRows} key={key}>{row[key]}</td>);
-       
-       
+       if(obj.renderCellBody){
+            cells.push(<td className={obj.className} rowSpan={numRows} key={obj.keyColumn}>{obj.renderCellBody(row)}</td>);
+       }else{
+            cells.push(<td className={obj.className} rowSpan={numRows} key={obj.keyColumn}>{row[obj.keyColumn]}</td>);
+       }
        
         return (
             <Fragment>{cells}</Fragment>
@@ -93,7 +94,7 @@ export class Table extends Component {
     render() {
 
         let { headers, data, headerRow,  cellProperties} = this.props;
-        let counter = 0;
+        let headersColumns = headers.filter( obj => obj.keyColumn);
         return (
             <div>
                 <table border="1">
@@ -105,17 +106,28 @@ export class Table extends Component {
                         ))}
                         </tr>
                     </thead>
-                    <tbody className="row-divider">
-                        {
-                            data.map( row => {
-                                if(headerRow && counter !== 0){
-                                    delete row[headerRow.column];
+                    {
+                        data.map( arrayElement => {
+                            let counter = 0;
+                            let newHeadersColumns = [ ...headersColumns];
+                           
+                            return (
+                                <tbody className="row-divider">
+                                {
+                                    arrayElement.map( (row, index, array) => {
+                                        if(headerRow && counter !== 0){
+                                            newHeadersColumns = headersColumns.filter( obj => obj.keyColumn !== headerRow.column)
+                                        }
+                                        counter++;
+                                        return this.getRowBody(row, headerRow, cellProperties, newHeadersColumns,array.length)
+                                    })
                                 }
-                                counter++;
-                                return this.getRowBody(row, headerRow, cellProperties)
-                            })
-                        }
-                    </tbody>
+                                </tbody>
+                            )
+
+                        })
+                    }
+                   
                 </table>
             </div>
         )

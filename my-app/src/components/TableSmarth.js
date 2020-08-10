@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Table from "./Table";
 import moment from "moment";
+import { setNewDate } from "./../redux/actionCreators";
+import { connect } from "react-redux";
 
 export class TableSmarth extends Component {
   constructor(props) {
@@ -8,85 +10,253 @@ export class TableSmarth extends Component {
     this.state = {
       headers: [],
       data: [
-        {
-          categoria: "comprador",
-          pimienta: "assss",
-          nombre: "Sergio",
-          apellido: "mallma",
-          color: "azul",
-          estado: "habilitado",
-          dni: "44332211",
-          usuario: "rolf",
-          contrasenia: "abc",
-        },
-        {
-          categoria: "comprador",
-          pimienta: "assss",
-          nombre: "Luis",
-          apellido: "mallma",
-          color: "rojo",
-          estado: "deshabilitado",
-          dni: "4433222",
-          usuario: "rolf",
-          contrasenia: "abc",
-          
-        },
-        {
-          categoria: "comprador",
-
-          pimienta: "assss",
-          nombre: "Kevin",
-          apellido: "mallma",
-          color: "morado",
-          estado: "habilitado",
-          dni: "44332222",
-          usuario: "rolf",
-          contrasenia: "abc",
-        },
-        {
-          categoria: "comprador",
-          pimienta: "assss",
-          nombre: "Consuelo",
-          apellido: "leiva",
-          color: "amarillo",
-          estado: "habilitado",
-          dni: "55342322",
-          usuario: "rolf",
-          contrasenia: "abc",
-        },
-        {
-          categoria: "comprador",
-          pimienta: "assss",
-          nombre: "Edson",
-          apellido: "Jacksa",
-          color: "morado",
-          estado: "habilitado",
-          dni: "4331213",
-          usuario: "rolf",
-          contrasenia: "abc",
-        },
+        [
+          {
+            category: "",
+            subcategoria: "Adn Registrados",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "004",
+            totalMounth: "001",
+          },
+        ],
+        [
+          {
+            category: "Prospection",
+            subcategoria: "leads",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "004",
+            totalMounth: "001",
+          },
+          {
+            category: "Prospection",
+            subcategoria: "referidos",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "004",
+            totalMounth: "001",
+          },
+          {
+            category: "Prospection",
+            subcategoria: "Observaciones",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "004",
+            totalMounth: "001",
+          },
+          {
+            category: "Prospection",
+            subcategoria: "total",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "004",
+            totalMounth: "001",
+          },
+        ],
+        [
+          {
+            category: "cita",
+            subcategoria: "Primera etapa",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "010",
+            totalMounth: "001",
+          },
+          {
+            category: "cita",
+            subcategoria: "Segunda etapa",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "010",
+            totalMounth: "001",
+          },
+          {
+            category: "cita",
+            subcategoria: "Etapa adicional",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "010",
+            totalMounth: "001",
+          },
+        ],
+        [
+          {
+            category: "Entrevista",
+            subcategoria: "Primera etapa",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "010",
+            totalMounth: "001",
+          },
+          {
+            category: "Entrevista",
+            subcategoria: "Segunda etapa",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "010",
+            totalMounth: "001",
+          },
+          {
+            category: "Entrevista",
+            subcategoria: "Etapa adicional",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "010",
+            totalMounth: "001",
+          },
+          {
+            category: "Entrevista",
+            subcategoria: "Total",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "010",
+            totalMounth: "001",
+          },
+        ],
+        [
+          {
+            category: "Producción",
+            subcategoria: "Solicitudes",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "010",
+            totalMounth: "001",
+          },
+          {
+            category: "Producción",
+            subcategoria: "Primas",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "010",
+            totalMounth: "001",
+          },
+        ],
+        [
+          {
+            category: "Producción",
+            subcategoria: "Solicitudes",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "010",
+            totalMounth: "001",
+          },
+          {
+            category: "Producción",
+            subcategoria: "Primas",
+            lunes: "001",
+            martes: "002",
+            miercoles: "003",
+            jueves: "004",
+            viernes: "010",
+            sabado: "012",
+            domingo: "013",
+            totalWeek: "010",
+            totalMounth: "001",
+          },
+        ],
       ],
       cellPropertiesBody: {
         numCellByProperties: [
           {
-            key: "pimienta",
+            key: "subcategoria",
             numCell: 1,
+            className:"hola"
           },
-          { key: "usuario", numCell: 1 },
+          { key: "totalMounth", numCell: 1 },
         ],
-        cellGeneralFormat: this.renderCellBodyGeneral,
       },
       headerRow: {
-        column: "categoria",
+        column: "category",
       },
     };
     this.getHeaders = this.getHeaders.bind(this);
     this.rangeGenerator = this.rangeGenerator.bind(this);
-    this.renderCellDay = this.renderCellDay.bind(this);
-    this.insertRenderDataToColumns = this.insertRenderDataToColumns.bind(this);
+    this.renderCellNombre = this.renderCellNombre.bind(this);
+    this.insertDataToHeaderCells = this.insertDataToHeaderCells.bind(this);
     this.setDayName = this.setDayName.bind(this);
     this.setMonthName = this.setMonthName.bind(this);
-    this.renderCellBodyGeneral = this.renderCellBodyGeneral.bind(this);
+    this.renderCellBody = this.renderCellBody.bind(this);
+    this.renderCellApellido = this.renderCellApellido.bind(this);
+    this.renderCellPimienta = this.renderCellPimienta.bind(this);
+    this.renderCellTotalMounth = this.renderCellTotalMounth.bind(this);
+    this.renderCellTotalWeek = this.renderCellTotalWeek.bind(this);
+    this.renderCellSubCategoria = this.renderCellSubCategoria.bind(this);
   }
 
   setDayName = function (day) {
@@ -156,11 +326,12 @@ export class TableSmarth extends Component {
     }
   };
 
-  renderCellBodyGeneral(data){
-      console.log(data);
-      return <div>
-            {data.pimienta}
+  renderCellBody(data) {
+    return (
+      <div data-id={data.id}>
+        <div>{data.category}</div>
       </div>
+    );
   }
 
   getHeaders() {
@@ -168,30 +339,101 @@ export class TableSmarth extends Component {
       {
         data: "",
         empty: true,
+        keyColumn: "category",
+        renderCellBody: this.renderCellBody,
+      },
+      { data: "", empty: true, className:"Hola" },
+      {
+        data: "",
+        keyColumn: "subcategoria",
+        renderCellBody: this.renderCellSubCategoria,
+      },
+      {
+        data: "LUN",
+        keyColumn: "lunes",
+        renderCellHeader: this.renderCellNombre,
+      },
+      {
+        data: "MAR",
+        keyColumn: "martes",
+        renderCellHeader: this.renderCellNombre,
+      },
+      {
+        data: "MIE",
+        keyColumn: "miercoles",
+        renderCellHeader: this.renderCellNombre,
+      },
+      {
+        data: "JUE",
+        keyColumn: "jueves",
+        renderCellHeader: this.renderCellNombre,
+      },
+      {
+        data: "VIE",
+        keyColumn: "viernes",
+        renderCellHeader: this.renderCellNombre,
+      },
+      {
+        data: "SAB",
+        keyColumn: "sabado",
+        renderCellHeader: this.renderCellNombre,
+      },
+      {
+        data: "DOM",
+        keyColumn: "domingo",
+        renderCellHeader: this.renderCellNombre,
+      },
+      {
+        data: "DOM",
+        keyColumn: "totalWeek",
+        renderCellHeader: this.renderCellTotalWeek,
       },
       { data: "", empty: true },
-      { data: "", empty: true },
-
-      { data: "LUN", render: this.renderCellDay },
-      { data: "MAR", render: this.renderCellDay },
-      { data: "MIE", render: this.renderCellDay },
-      { data: "JUE", render: this.renderCellDay },
-      { data: "VIE", render: this.renderCellDay },
-      { data: "", empty: true },
-      { data: "SAB", render: this.renderCellDay },
-      { data: "DOM", render: this.renderCellDay },
+      {
+        data: "DOM",
+        keyColumn: "totalMounth",
+        renderCellHeader: this.renderCellTotalMounth,
+      },
     ];
   }
+  renderCellSubCategoria(data) {
+   
+      return (
+        <div>
+          <div>{data.subcategoria}</div>
+        </div>
+      );
+    
+  }
 
-  insertRenderDataToColumns() {
-    let startWeek = moment().startOf("isoWeek");
-    let endWeek = moment().endOf("isoWeek");
+  renderCellTotalWeek() {
+    return (
+      <div>
+        <div>TOTAL</div>
+        <div>SEMANAL</div>
+      </div>
+    );
+  }
+
+  renderCellTotalMounth() {
+    return (
+      <div>
+        <div>TOTAL</div>
+        <div>MES</div>
+      </div>
+    );
+  }
+
+  insertDataToHeaderCells(date) {
+    let startWeek = moment(date).startOf("isoWeek");
+    let endWeek = moment(date).endOf("isoWeek");
+
     let rangeWeek = this.rangeGenerator(startWeek, endWeek);
     let headers = this.getHeaders();
     let newHeaders = [];
 
     headers.forEach((element) => {
-      if (element.data !== "") {
+      if (element.keyColumn) {
         for (let i = 0; i <= rangeWeek.length - 1; i++) {
           if (rangeWeek[i].key === element.data) {
             element.renderData = rangeWeek[i];
@@ -201,15 +443,31 @@ export class TableSmarth extends Component {
       }
       newHeaders.push(element);
     });
-
     return newHeaders;
   }
 
-  renderCellDay(data) {
+  renderCellNombre(data) {
     return (
       <div>
         <div className="part-first-text-header">{data.textDay}</div>
         <div>{data.numDay}</div>
+      </div>
+    );
+  }
+
+  renderCellApellido(data) {
+    return (
+      <div>
+        <div className="part-first-text-header">{data.textDay}</div>
+        <div>{data.numDay}</div>
+      </div>
+    );
+  }
+
+  renderCellPimienta(data) {
+    return (
+      <div>
+        <div className="part-first-text-header">{data}</div>
       </div>
     );
   }
@@ -231,7 +489,7 @@ export class TableSmarth extends Component {
   }
 
   render() {
-    let array = this.insertRenderDataToColumns();
+    let array = this.insertDataToHeaderCells(this.props.firstDateInRange);
 
     return (
       <div>
@@ -246,4 +504,14 @@ export class TableSmarth extends Component {
   }
 }
 
-export default TableSmarth;
+const mapStateToProps = (state) => ({
+  firstDateInRange: state.firstDateInRange,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setNewDate(date) {
+    dispatch(setNewDate(date));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableSmarth);
