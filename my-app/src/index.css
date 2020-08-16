@@ -14,9 +14,3 @@ code {
 
 /*** tabla **/
 
-
-.row-divider::before {
-  height: 8px;
-  display: table-row;
-  content: '';
-}

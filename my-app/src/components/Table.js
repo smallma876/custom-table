@@ -33,7 +33,6 @@ export class Table extends Component {
 
     getRowBody(row, headerRow, cellProperties, headersColumns, length){
         let object = row;
-        console.log(object);
         return (
             <tr>
                 {
@@ -124,7 +123,7 @@ export class Table extends Component {
                                 }
                                 </tbody>
                             )
-
+                                
                         })
                     }
                    
